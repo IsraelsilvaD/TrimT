@@ -33,11 +33,11 @@ export default function RootLayout() {
       <Stack>
         <Stack.Screen 
           name="TelaDeLogin" 
-          options={{ headerShown: false }} 
+          options={{ headerShown: true, title: 'TelaDeLogin' }} 
         />
         <Stack.Screen 
           name="RecuperarSenha" 
-          options={{ headerShown: true, title: 'Recuperar Senha' }} 
+          options={{ headerShown: true, title: 'RecuperarSenha' }} 
         />
         <Stack.Screen name="+not-found" />
       </Stack>

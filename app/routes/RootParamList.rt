@@ -1,0 +1,9 @@
+import 'expo-router';
+
+declare module 'expo-router' {
+  interface RootParamList {
+    TelaDeLogin: undefined; // Defina suas telas aqui
+    RecuperarSenha: undefined; // A tela que você deseja navegar
+    // Adicione outras telas conforme necessário
+  }
+}
