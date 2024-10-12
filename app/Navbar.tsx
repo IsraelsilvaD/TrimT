@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'; // Adicionando TouchableOpacity
+import { Link } from 'expo-router'; // Importando o Link para navegação
 
 export default function Navbar() {
   return (
@@ -12,9 +13,16 @@ export default function Navbar() {
             style={styles.logo} 
           />
         </View>
-        <TouchableOpacity onPress={() => console.log('Navegar para Início')}>
-          <Text style={styles.navLink}>Início</Text>
-        </TouchableOpacity>
+        
+        {/* Link para a tela de Serviços Recomendados */}
+        <Link href="/ServicosRecomendados" style={styles.navLink}>
+          Início
+        </Link>
+
+        {/* Link para a tela de Administrador */}
+        <Link href="/Administrador" style={styles.navLink}>
+          Administrador
+        </Link>
       </View>
 
       <TouchableOpacity onPress={() => console.log('Logout')} style={styles.logoutButton}>
@@ -55,6 +63,7 @@ const styles = StyleSheet.create({
   navLink: {
     color: '#FFD700',
     fontSize: 18,
+    marginHorizontal: 10,
   },
   logoutButton: {
     padding: 8,
