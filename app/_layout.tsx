@@ -1,43 +1,56 @@
-// app/_layout.js ou app/_layout.tsx
-
+import React, { useEffect } from 'react';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
+import { useFonts } from 'expo-font';
+import Navbar from './Navbar';
+import { useColorScheme } from '@/hooks/useColorScheme';
 
-import { useColorScheme } from '@/hooks/useColorScheme'; // Ajuste conforme sua estrutura de pastas
+// Não importa o componente aqui; você vai chamá-lo ao navegar
+// import CalendarioComponent from './CalendarioComponent'; // Remova esta linha
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
+
   const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'), // Exemplo de fonte
+    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
 
   useEffect(() => {
     if (loaded) {
-      SplashScreen.hideAsync(); // Oculta a tela de splash após carregar os recursos
+      SplashScreen.hideAsync();
     }
   }, [loaded]);
 
   if (!loaded) {
-    return null; // Retorna null enquanto as fontes estão sendo carregadas
+    return null;
   }
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      {/* Navbar renderizada aqui */}
+      <Navbar />
+
+      {/* Stack Navigator deve estar aqui */}
       <Stack>
-        <Stack.Screen 
-          name="TelaDeLogin" 
-          options={{ headerShown: true, title: 'TelaDeLogin' }} 
+        <Stack.Screen
+          name="TelaDeLogin"
+          options={{ headerShown: true, title: 'Login' }} // Renomeie conforme necessário
         />
-        <Stack.Screen 
-          name="RecuperarSenha" 
-          options={{ headerShown: true, title: 'RecuperarSenha' }} 
+        <Stack.Screen
+          name="RecuperarSenha"
+          options={{ headerShown: true, title: 'Recuperar Senha' }}
+        />
+        <Stack.Screen
+          name="Agendamento"
+          options={{ headerShown: true, title: 'Agendamentos' }}
+        />
+        {/* Navegação para o calendário deve ser feita de forma diferente */}
+        <Stack.Screen
+          name="Calendario"
+          options={{ headerShown: true, title: 'Calendário' }} // Título da tela
         />
         <Stack.Screen name="+not-found" />
       </Stack>

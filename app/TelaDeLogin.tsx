@@ -1,24 +1,45 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
-import { useNavigation, Link } from 'expo-router'; // Adicione Link aqui
+import { View, Text, TextInput, Button, StyleSheet, Alert, TouchableOpacity, ImageBackground } from 'react-native';
+import { Link } from 'expo-router'; // Usando Link para navegação
+import axios from 'axios';
 
 const TelaDeLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
-  const navigation = useNavigation();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = () => {
-    console.log('Email:', email);
-    console.log('Senha:', password);
-    console.log('Lembrar de mim:', rememberMe);
+  const handleLogin = async () => {
+    if (!email || !password) {
+      Alert.alert('Erro', 'Preencha todos os campos.');
+      return;
+    }
 
-    // Implementar a lógica de autenticação aqui antes de navegar
+    setIsLoading(true);
+
+    try {
+      const response = await axios.post('http://192.168.0.100:8080/api/login', {
+        email,
+        password,
+      });
+
+      if (response.status === 200) {
+        Alert.alert('Sucesso', 'Login realizado com sucesso!');
+        // A navegação será realizada com o Link no botão de login
+      } else {
+        Alert.alert('Erro', 'Erro ao realizar login.');
+      }
+    } catch (error) {
+      console.error('Erro na requisição', error);
+      Alert.alert('Erro', 'Ocorreu um erro ao tentar realizar o login.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <ImageBackground 
-      source={require('../assets/images/imgFundo.jpeg')} // Certifique-se de que o caminho da imagem está correto
+      source={require('../assets/images/imgFundo.jpeg')} 
       style={styles.loginBackground}
     >
       <View style={styles.loginContainer}>
@@ -29,7 +50,8 @@ const TelaDeLogin = () => {
           value={email}
           onChangeText={setEmail}
           keyboardType="email-address"
-          placeholderTextColor="#ccc" // Cor do texto do placeholder
+          autoCapitalize="none"
+          placeholderTextColor="#ccc"
         />
         <TextInput
           style={styles.input}
@@ -37,9 +59,9 @@ const TelaDeLogin = () => {
           value={password}
           onChangeText={setPassword}
           secureTextEntry
-          placeholderTextColor="#ccc" // Cor do texto do placeholder
+          placeholderTextColor="#ccc"
         />
-        
+
         <View style={styles.checkboxContainer}>
           <TouchableOpacity style={styles.checkboxItem} onPress={() => setRememberMe(!rememberMe)}>
             <Text style={[styles.checkboxText, rememberMe && styles.checked]}>
@@ -47,17 +69,24 @@ const TelaDeLogin = () => {
             </Text>
           </TouchableOpacity>
 
-          {/* Novo View para alinhar "Esqueceu a senha?" ao lado de "Lembrar-me" */}
           <View style={styles.forgotPasswordContainer}>
-            <Link href="/RecuperarSenha" style={styles.forgotPasswordLink}>Esqueceu a senha?</Link> 
+            <Link href="/RecuperarSenha" style={styles.forgotPasswordLink}>Esqueceu a senha?</Link>
           </View>
         </View>
 
-        <Button title="Login" onPress={handleSubmit} color="#FFD700" />
+        {/* Botão de Login com Link para Agendamentos */}
+        <Link href="/ServicosRecomendados" asChild>
+          <TouchableOpacity disabled={isLoading} onPress={handleLogin} style={styles.loginButton}>
+            <Text style={styles.loginButtonText}>
+              {isLoading ? 'Carregando...' : 'Login'}
+            </Text>
+          </TouchableOpacity>
+        </Link>
 
         <View style={styles.options}>
           <Text style={styles.optionText}>
-            Não tem uma conta? <Text style={styles.registerLink}>Cadastre-se</Text>
+            Não tem uma conta? 
+            <Link href="/TelaDeRegistro" style={styles.registerLink}> Registre-se</Link>
           </Text>
         </View>
       </View>
@@ -67,22 +96,21 @@ const TelaDeLogin = () => {
 
 const styles = StyleSheet.create({
   loginBackground: {
-    flex: 1, // Preenche toda a tela
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
   loginContainer: {
-    backgroundColor: 'rgba(255, 255, 255, 0.2)', // Fundo com leve transparência
+    backgroundColor: 'rgba(255, 255, 255, 0.4)', 
     padding: 40,
     borderRadius: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 5, // Efeito de sombra para Android
-    color: 'white',
-    width: '80%', // Largura responsiva
-    maxWidth: 400, // Limite máximo de largura
+    elevation: 5, 
+    width: '80%',
+    maxWidth: 400,
     textAlign: 'center',
   },
   title: {
@@ -103,8 +131,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 15,
-    justifyContent: 'space-between', // Espaço entre os elementos
-    width: '100%', // Para ocupar toda a largura
+    justifyContent: 'space-between',
+    width: '100%',
   },
   checkboxItem: {
     flexDirection: 'row',
@@ -128,8 +156,19 @@ const styles = StyleSheet.create({
     color: '#FFD700',
     textDecorationLine: 'underline',
   },
+  loginButton: {
+    backgroundColor: '#FFD700',
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  loginButtonText: {
+    color: '#fff',
+    fontSize: 18,
+  },
   forgotPasswordContainer: {
-    marginLeft: 10, // Espaço entre "Lembrar-me" e "Esqueceu a senha?"
+    marginLeft: 10,
   },
   forgotPasswordLink: {
     color: '#FFD700',
