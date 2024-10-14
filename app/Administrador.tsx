@@ -1,9 +1,10 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, View, Text, ImageBackground } from 'react-native';
+import { SafeAreaView, StyleSheet, View, Text, ImageBackground, Dimensions } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { Link } from 'expo-router'; // Importando o Link do expo-router
 
-// Componente principal
+const { width } = Dimensions.get('window'); // Detecta a largura da tela
+
 const App = () => {
     return (
         <ImageBackground
@@ -17,7 +18,6 @@ const App = () => {
     );
 };
 
-// Mantendo a estrutura de Administrador
 const Administrador = () => {
     return (
         <View style={styles.adminContent}>
@@ -25,27 +25,25 @@ const Administrador = () => {
                 <Text style={styles.title}>Painel do Administrador</Text>
             </View>
             <View style={styles.adminOptions}>
-                {/* Substituindo "TouchableOpacity" por "Link" para navegação */}
                 <OptionCard icon="user" title="Gerenciar Usuários" link="/userManagement" />
-                <OptionCard icon="calendar" title="Gerenciar Agendamentos" />
-                <OptionCard icon="cogs" title="Gerenciar Relatórios" />
+                <OptionCard icon="calendar" title="Gerenciar Agendamentos" link="/ScheduleManagement"/>
+                <OptionCard icon="cogs" title="Gerenciar Relatórios" link="/RelatorioPage"/>
             </View>
         </View>
     );
 };
 
-// Componente para os cards de opções
 interface OptionCardProps {
-    icon: keyof typeof FontAwesome.glyphMap; // Usando o conjunto de ícones do FontAwesome
+    icon: keyof typeof FontAwesome.glyphMap;
     title: string;
-    link?: string; // Link opcional para navegação
+    link?: string;
 }
 
 const OptionCard: React.FC<OptionCardProps> = ({ icon, title, link }) => {
     return (
         <View style={styles.optionCard}>
             {link ? (
-                <Link href={'/userManagement'} style={styles.optionLink}>
+                <Link href={link} style={styles.optionLink}>
                     <FontAwesome name={icon} size={48} color="#FFD700" />
                     <Text style={styles.optionTitle}>{title}</Text>
                 </Link>
@@ -59,11 +57,11 @@ const OptionCard: React.FC<OptionCardProps> = ({ icon, title, link }) => {
     );
 };
 
-// Estilos
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'flex-start',
+        paddingHorizontal: 10, // Adiciona margem lateral para telas menores
     },
     background: {
         flex: 1,
@@ -71,48 +69,43 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     adminContent: {
-        position: 'absolute',
-        top: 120,
-        alignItems: 'center', // Centraliza os itens horizontalmente
+        marginTop: 100, // Ajusta o topo para caber bem em telas menores
+        alignItems: 'center',
         zIndex: 2,
     },
     header: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 20, // Espaçamento abaixo do título
+        marginBottom: 20,
     },
     title: {
-        fontSize: 36,
+        fontSize: width < 360 ? 28 : 36, // Ajusta o tamanho do título conforme a largura da tela
         color: 'white',
         textAlign: 'center',
     },
     adminOptions: {
         flexDirection: 'row',
-        justifyContent: 'center', // Centraliza as opções
         flexWrap: 'wrap',
-        alignItems: 'center', // Alinha os itens ao centro
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%', // Garante que ocupe toda a largura disponível
     },
     optionCard: {
         backgroundColor: 'rgba(0, 0, 0, 0.8)',
         borderRadius: 10,
-        width: 150, // Diminuindo a largura do card para centralizar melhor
-        height: 150, // Diminuindo a altura do card para centralizar melhor
-        display: 'flex',
+        width: width / 2.5, // Ajusta a largura dos cards de forma proporcional
+        height: width / 2.5, // Mantém o formato quadrado
         justifyContent: 'center',
         alignItems: 'center',
         margin: 10,
     },
     optionLink: {
-        display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         textAlign: 'center',
     },
     optionTitle: {
-        fontSize: 18,
+        fontSize: width < 360 ? 14 : 18, // Ajusta o tamanho do texto conforme a tela
         color: '#ffffff',
-        marginTop: 10, // Adiciona um espaçamento entre o ícone e o texto
+        marginTop: 10,
     },
 });
 

@@ -52,6 +52,18 @@ export default function RootLayout() {
           name="Calendario"
           options={{ headerShown: true, title: 'Calendário' }} // Título da tela
         />
+         <Stack.Screen
+          name="ScheduleManagement"
+          options={{ headerShown: true, title: 'ScheduleManagement' }} // Título da tela
+        />
+        <Stack.Screen
+          name="RelatorioPage"
+          options={{ headerShown: true, title: 'RelatorioPage' }} // Título da tela
+        />
+        <Stack.Screen
+          name="TelaColaboradores"
+          options={{ headerShown: true, title: 'TelaColaboradores' }} // Título da tela
+        />
         <Stack.Screen name="+not-found" />
       </Stack>
     </ThemeProvider>

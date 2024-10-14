@@ -23,6 +23,10 @@ export default function Navbar() {
         <Link href="/Administrador" style={styles.navLink}>
           Administrador
         </Link>
+
+        <Link href="/TelaColaboradores" style={styles.navLink}>
+          Colaborador
+        </Link>
       </View>
 
       <TouchableOpacity onPress={() => console.log('Logout')} style={styles.logoutButton}>
