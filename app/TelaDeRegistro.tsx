@@ -21,7 +21,6 @@ const TelaDeRegistro = () => {
         }
 
         setIsSubmitting(true);
-        // Aqui você pode adicionar a lógica para enviar os dados
         console.log({ nome, telefone, email, senha });
         setModalVisible(true);  // Exibe o modal ao enviar os dados
 
@@ -32,7 +31,6 @@ const TelaDeRegistro = () => {
     };
 
     const handleCancel = () => {
-        // Aqui você pode adicionar a lógica para cancelar o registro
         Alert.alert('Cancelado', 'Registro cancelado.');
         router.push('/TelaDeLogin'); // Navega de volta para a tela de login
     };
@@ -51,10 +49,11 @@ const TelaDeRegistro = () => {
 
                 {/* Campo Nome */}
                 <View style={styles.inputBox}>
-                    <Icon name="person-outline" size={20} />
+                    <Icon name="person-outline" size={20} color="white" />
                     <TextInput
                         style={styles.input}
                         placeholder="Nome"
+                        placeholderTextColor="#ccc"
                         value={nome}
                         onChangeText={setNome}
                     />
@@ -62,10 +61,11 @@ const TelaDeRegistro = () => {
 
                 {/* Campo Telefone */}
                 <View style={styles.inputBox}>
-                    <Icon name="call-outline" size={20} />
+                    <Icon name="call-outline" size={20} color="white" />
                     <TextInput
                         style={styles.input}
                         placeholder="Telefone"
+                        placeholderTextColor="#ccc"
                         value={telefone}
                         onChangeText={setTelefone}
                         keyboardType="phone-pad"
@@ -74,10 +74,11 @@ const TelaDeRegistro = () => {
 
                 {/* Campo Email */}
                 <View style={styles.inputBox}>
-                    <Icon name="mail-outline" size={20} />
+                    <Icon name="mail-outline" size={20} color="white" />
                     <TextInput
                         style={styles.input}
                         placeholder="Email"
+                        placeholderTextColor="#ccc"
                         value={email}
                         onChangeText={setEmail}
                         keyboardType="email-address"
@@ -86,10 +87,11 @@ const TelaDeRegistro = () => {
 
                 {/* Campo Senha */}
                 <View style={styles.inputBox}>
-                    <Icon name="lock-closed-outline" size={20} />
+                    <Icon name="lock-closed-outline" size={20} color="white" />
                     <TextInput
                         style={styles.input}
                         placeholder="Senha"
+                        placeholderTextColor="#ccc"
                         value={senha}
                         onChangeText={setSenha}
                         secureTextEntry
@@ -99,7 +101,7 @@ const TelaDeRegistro = () => {
                 {/* Botões de Enviar e Cancelar */}
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity 
-                        style={[styles.button, isSubmitting ? styles.buttonPressed : styles.buttonSend]} 
+                        style={[styles.button, styles.buttonSend]} 
                         onPress={handleSubmit}
                         onPressIn={() => setIsSubmitting(true)} 
                         onPressOut={() => setIsSubmitting(false)}
@@ -110,8 +112,6 @@ const TelaDeRegistro = () => {
                     <TouchableOpacity 
                         style={[styles.button, styles.buttonCancel]} 
                         onPress={handleCancel}
-                        onPressIn={() => setIsSubmitting(true)} 
-                        onPressOut={() => setIsSubmitting(false)}
                     >
                         <Text style={styles.buttonText}>Cancelar</Text>
                     </TouchableOpacity>
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     },
     container: {
         padding: 20,
-        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
         borderRadius: 10,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 4 },
@@ -160,18 +160,20 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 24,
         marginBottom: 20,
+        color: 'white', // Cor branca para o título
     },
     inputBox: {
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 15,
         borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
+        borderBottomColor: 'white', // Cor branca para a linha inferior do input
         width: '100%',
     },
     input: {
         flex: 1,
         padding: 10,
+        color: 'white', // Cor branca para o texto do input
     },
     buttonContainer: {
         flexDirection: 'row',
@@ -193,11 +195,9 @@ const styles = StyleSheet.create({
     buttonCancel: {
         backgroundColor: 'red',
     },
-    buttonPressed: {
-        backgroundColor: 'yellow',
-    },
     buttonText: {
         fontWeight: 'bold',
+        color: 'black', // Cor do texto dentro dos botões
     },
     modalOverlay: {
         flex: 1,
@@ -216,10 +216,12 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 10,
+        color: 'black', // Cor do título do modal
     },
     modalText: {
         fontSize: 16,
         marginBottom: 20,
+        color: 'black', // Cor do texto do modal
     },
     closeButton: {
         backgroundColor: '#007bff',
@@ -227,7 +229,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
     closeButtonText: {
-        color: 'white',
+        color: 'white', // Cor branca para o texto do botão "Fechar"
         fontWeight: 'bold',
     },
 });

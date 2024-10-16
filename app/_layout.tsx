@@ -6,9 +6,6 @@ import { useFonts } from 'expo-font';
 import Navbar from './Navbar';
 import { useColorScheme } from '@/hooks/useColorScheme';
 
-// Não importa o componente aqui; você vai chamá-lo ao navegar
-// import CalendarioComponent from './CalendarioComponent'; // Remova esta linha
-
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -33,36 +30,35 @@ export default function RootLayout() {
       {/* Navbar renderizada aqui */}
       <Navbar />
 
-      {/* Stack Navigator deve estar aqui */}
+      {/* Stack Navigator */}
       <Stack>
         <Stack.Screen
           name="TelaDeLogin"
-          options={{ headerShown: true, title: 'Login' }} // Renomeie conforme necessário
+          options={{ headerShown: false }} // Oculta o header e o título da tela de login
         />
         <Stack.Screen
           name="RecuperarSenha"
-          options={{ headerShown: true, title: 'Recuperar Senha' }}
+          options={{ headerShown: false }} // Oculta o header e o título da tela de Recuperar Senha
         />
         <Stack.Screen
           name="Agendamento"
-          options={{ headerShown: true, title: 'Agendamentos' }}
+          options={{ headerShown: false }} // Oculta o header e o título da tela de Agendamentos
         />
-        {/* Navegação para o calendário deve ser feita de forma diferente */}
         <Stack.Screen
           name="Calendario"
-          options={{ headerShown: true, title: 'Calendário' }} // Título da tela
+          options={{ headerShown: false }} // Oculta o header e o título da tela de Calendário
         />
-         <Stack.Screen
+        <Stack.Screen
           name="ScheduleManagement"
-          options={{ headerShown: true, title: 'ScheduleManagement' }} // Título da tela
+          options={{ headerShown: false }} // Oculta o header e o título da tela de ScheduleManagement
         />
         <Stack.Screen
           name="RelatorioPage"
-          options={{ headerShown: true, title: 'RelatorioPage' }} // Título da tela
+          options={{ headerShown: false }} // Oculta o header e o título da tela de RelatorioPage
         />
         <Stack.Screen
           name="TelaColaboradores"
-          options={{ headerShown: true, title: 'TelaColaboradores' }} // Título da tela
+          options={{ headerShown: false }} // Oculta o header e o título da tela de TelaColaboradores
         />
         <Stack.Screen name="+not-found" />
       </Stack>

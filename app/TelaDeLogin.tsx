@@ -84,9 +84,8 @@ const TelaDeLogin = () => {
         </Link>
 
         <View style={styles.options}>
-          <Text style={styles.optionText}>
-            Não tem uma conta? 
-            <Link href="/TelaDeRegistro" style={styles.registerLink}> Registre-se</Link>
+          <Text style={styles.optionText}> Não tem uma conta?
+            <Link href="/TelaDeRegistro" style={styles.registerLink}>Registre-se</Link>
           </Text>
         </View>
       </View>
@@ -101,7 +100,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   loginContainer: {
-    backgroundColor: 'rgba(255, 255, 255, 0.4)', 
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', 
     padding: 40,
     borderRadius: 10,
     shadowColor: '#000',
@@ -116,7 +115,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     marginBottom: 20,
-    color: '#FFD700',
+    color: 'white',
     textAlign: 'center',
   },
   input: {
@@ -142,7 +141,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   checked: {
-    color: '#FFD700',
+    color: 'white',
   },
   options: {
     marginTop: 20,
@@ -155,16 +154,17 @@ const styles = StyleSheet.create({
   registerLink: {
     color: '#FFD700',
     textDecorationLine: 'underline',
+    padding: 10,
   },
   loginButton: {
-    backgroundColor: '#FFD700',
+    backgroundColor: 'white',
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 10,
     alignItems: 'center',
     marginTop: 10,
   },
   loginButtonText: {
-    color: '#fff',
+    color: 'black',
     fontSize: 18,
   },
   forgotPasswordContainer: {
