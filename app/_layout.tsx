@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
+import { Stack, useRouter, useSegments } from 'expo-router'; // Import useRouter e useSegments
 import * as SplashScreen from 'expo-splash-screen';
 import { useFonts } from 'expo-font';
 import Navbar from './Navbar';
@@ -10,6 +10,8 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
+  const router = useRouter();
+  const segments = useSegments(); // Hook para pegar os segmentos de navegação
 
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
@@ -25,40 +27,48 @@ export default function RootLayout() {
     return null;
   }
 
+  // Verifique se a rota atual é uma das telas onde queremos ocultar a Navbar
+  const hideNavbarScreens = ['TelaDeLogin', 'RecuperarSenha', 'TelaDeRegistro']; // Telas específicas
+  const hideNavbar = hideNavbarScreens.includes(segments[0]); // Verifica se a primeira parte do caminho é uma dessas telas
+
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      {/* Navbar renderizada aqui */}
-      <Navbar />
+      {/* Renderiza a Navbar somente se não estivermos em uma das telas especificadas */}
+      {!hideNavbar && <Navbar />}
 
       {/* Stack Navigator */}
       <Stack>
         <Stack.Screen
           name="TelaDeLogin"
-          options={{ headerShown: false }} // Oculta o header e o título da tela de login
+          options={{ headerShown: false }} // Oculta o header e a Navbar na tela de Login
         />
         <Stack.Screen
           name="RecuperarSenha"
-          options={{ headerShown: false }} // Oculta o header e o título da tela de Recuperar Senha
+          options={{ headerShown: false }} // Oculta o header e a Navbar na tela de Recuperar Senha
+        />
+        <Stack.Screen
+          name="TelaDeRegistro"
+          options={{ headerShown: false }} // Oculta o header e a Navbar na tela de Registrar
         />
         <Stack.Screen
           name="Agendamento"
-          options={{ headerShown: false }} // Oculta o header e o título da tela de Agendamentos
+          options={{ headerShown: true }} // Exibe o header, mas você pode personalizar conforme necessário
         />
         <Stack.Screen
           name="Calendario"
-          options={{ headerShown: false }} // Oculta o header e o título da tela de Calendário
+          options={{ headerShown: true }}
         />
         <Stack.Screen
           name="ScheduleManagement"
-          options={{ headerShown: false }} // Oculta o header e o título da tela de ScheduleManagement
+          options={{ headerShown: true }}
         />
         <Stack.Screen
           name="RelatorioPage"
-          options={{ headerShown: false }} // Oculta o header e o título da tela de RelatorioPage
+          options={{ headerShown: true }}
         />
         <Stack.Screen
           name="TelaColaboradores"
-          options={{ headerShown: false }} // Oculta o header e o título da tela de TelaColaboradores
+          options={{ headerShown: true }}
         />
         <Stack.Screen name="+not-found" />
       </Stack>

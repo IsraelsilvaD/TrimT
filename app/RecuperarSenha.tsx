@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     maxWidth: 400,
     backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fundo transparente
     borderRadius: 10,
-    padding: 20,
+    padding: 60,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
@@ -113,13 +113,13 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   title: {
-    fontSize: 24,
-    marginBottom: 20,
+    fontSize: 35,
+    marginBottom: 50,
     textAlign: 'center',
     color: 'white', // Cor dourada para o título
   },
   inputGroup: {
-    marginBottom: 15,
+    marginBottom: 30,
   },
   label: {
     fontWeight: 'bold',
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 5,
     flex: 1,
-    marginRight: 10,
+    marginRight: 1,
     alignItems: 'center',
   },
   buttonCancel: {
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 5,
     flex: 1,
-    marginLeft: 10,
+    marginLeft: 2,
     alignItems: 'center',
   },
   buttonText: {
