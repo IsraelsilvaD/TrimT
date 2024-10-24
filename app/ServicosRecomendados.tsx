@@ -19,7 +19,7 @@ const ServicosRecomendados = () => {
       {/* Seção de boas-vindas */}
       <View style={styles.welcomeContainer}>
         <Text style={styles.welcomeText}>Olá, João Ricardo</Text>
-        {/* Aqui você pode adicionar mais elementos, como a data atual */}
+        <Text style={styles.dateText}>Segunda, 26 de Agosto</Text> {/* Adicionando a data */}
       </View>
 
       {/* Título "Serviços Recomendados" */}
@@ -29,31 +29,40 @@ const ServicosRecomendados = () => {
 
       {/* Cards de serviços */}
       <ScrollView contentContainerStyle={styles.container}>
-        <View style={styles.cardsRow}>
-          <Link href="/CalendarioComponent" style={styles.cardContainer}>
+        <View style={styles.cardContainer}>
+          <Link href="/CalendarioComponent" style={styles.card}>
             <Image source={img.corteCabelo} style={styles.image} />
-            <Text style={styles.text}>Corte de Cabelo</Text>
-            <Text style={styles.price}>R$ 30,00</Text>
-          </Link>
-
-          <Link href="/CalendarioComponent" style={styles.cardContainer}>
-            <Image source={img.barba} style={styles.image} />
-            <Text style={styles.text}>Barba</Text>
-            <Text style={styles.price}>R$ 20,00</Text>
+            <View style={styles.textContainer}>
+              <Text style={styles.text}>Corte de Cabelo</Text>
+              <Text style={styles.price}>R$ 30,00</Text>
+            </View>
           </Link>
         </View>
-
-        <View style={styles.cardsRow}>
-          <Link href="/CalendarioComponent" style={styles.cardContainer}>
-            <Image source={img.barboterapia} style={styles.image} />
-            <Text style={styles.text}>Barboterapia</Text>
-            <Text style={styles.price}>R$ 40,00</Text>
+        <View style={styles.cardContainer}>
+          <Link href="/CalendarioComponent" style={styles.card}>
+            <Image source={img.barba} style={styles.image} />
+            <View style={styles.textContainer}>
+              <Text style={styles.text}>Barba</Text>
+              <Text style={styles.price}>R$ 20,00</Text>
+            </View>
           </Link>
-
-          <Link href="/CalendarioComponent" style={styles.cardContainer}>
+        </View>
+        <View style={styles.cardContainer}>
+          <Link href="/CalendarioComponent" style={styles.card}>
+            <Image source={img.barboterapia} style={styles.image} />
+            <View style={styles.textContainer}>
+              <Text style={styles.text}>Barboterapia</Text>
+              <Text style={styles.price}>R$ 40,00</Text>
+            </View>
+          </Link>
+        </View>
+        <View style={styles.cardContainer}>
+          <Link href="/CalendarioComponent" style={styles.card}>
             <Image source={img.acabamento} style={styles.image} />
-            <Text style={styles.text}>Pezinho</Text>
-            <Text style={styles.price}>R$ 15,00</Text>
+            <View style={styles.textContainer}>
+              <Text style={styles.text}>Pezinho</Text>
+              <Text style={styles.price}>R$ 15,00</Text>
+            </View>
           </Link>
         </View>
       </ScrollView>
@@ -63,7 +72,8 @@ const ServicosRecomendados = () => {
 
 const styles = StyleSheet.create({
   backgroundImage: {
-    flex: 1,
+    width: '100%',
+    height: '100%',
     resizeMode: 'cover',
     justifyContent: 'center',
   },
@@ -75,6 +85,10 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: '#fff',
     fontWeight: 'bold',
+  },
+  dateText: {
+    fontSize: 16,
+    color: '#fff',
   },
   titleContainer: {
     marginTop: 20,
@@ -89,32 +103,38 @@ const styles = StyleSheet.create({
     padding: 10,
     marginTop: 20,
   },
-  cardsRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginBottom: 20,
-  },
   cardContainer: {
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
-    borderRadius: 10,
-    padding: 15,
+    marginBottom: 20, // Espaçamento entre os cards
     alignItems: 'center',
-    width: 150,
+  },
+  card: {
+    backgroundColor: '#141109',
+    borderRadius: 10,
+    padding: 0, // Remover o padding do card
+    alignItems: 'center',
+    width: '90%', // Definindo a largura dos cards para 90% da tela
   },
   image: {
-    width: 100,
-    height: 100,
-    borderRadius: 10,
+    width: '100%', // Imagem cobre quase todo o card
+    height: 150, // Altura da imagem
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+  },
+  textContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between', // Para posicionar texto e preço
+    width: '100%', // Para que ocupe a largura total
+    paddingHorizontal: 10, // Espaçamento lateral
+    marginTop: 10, // Espaçamento acima do texto
   },
   text: {
-    marginTop: 10,
     fontSize: 16,
     fontWeight: 'bold',
+    color:'#fff',
   },
   price: {
-    marginTop: 5,
     fontSize: 14,
-    color: '#333',
+    color: '#fff',
   },
 });
 
