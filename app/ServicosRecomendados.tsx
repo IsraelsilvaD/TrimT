@@ -11,16 +11,23 @@ const img = {
 };
 
 const ServicosRecomendados = () => {
+  // Função para formatar a data
+  const getFormattedDate = () => {
+    const options = { weekday: 'long' as const, day: 'numeric' as const, month: 'long' as const };
+    return new Date().toLocaleDateString('pt-BR', options);
+  };
+
   return (
     <ImageBackground
-      source={require('../assets/images/imgFundo.jpeg')} // Definindo a imagem de fundo
+      source={require('../assets/images/imgFundo.jpeg')}
       style={styles.backgroundImage}
     >
       {/* Seção de boas-vindas */}
       <View style={styles.welcomeContainer}>
         <Text style={styles.welcomeText}>Olá, João Ricardo</Text>
-        <Text style={styles.dateText}>Segunda, 26 de Agosto</Text> {/* Adicionando a data */}
+        <Text style={styles.dateText}>{getFormattedDate()}</Text> {/* Data formatada */}
       </View>
+
 
       {/* Título "Serviços Recomendados" */}
       <View style={styles.titleContainer}>
