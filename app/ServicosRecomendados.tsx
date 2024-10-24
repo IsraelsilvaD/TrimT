@@ -125,16 +125,18 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between', // Para posicionar texto e preço
     width: '100%', // Para que ocupe a largura total
     paddingHorizontal: 10, // Espaçamento lateral
-    marginTop: 10, // Espaçamento acima do texto
+    marginTop: 2, // Espaçamento acima do texto
   },
   text: {
     fontSize: 16,
     fontWeight: 'bold',
     color:'#fff',
+    padding: 6, // Espaçamento interno
   },
   price: {
     fontSize: 14,
     color: '#fff',
+    padding: 6, // Espaçamento interno
   },
 });
 
