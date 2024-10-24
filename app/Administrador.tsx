@@ -43,7 +43,7 @@ const OptionCard: React.FC<OptionCardProps> = ({ icon, title, link }) => {
     return (
         <View style={styles.optionCard}>
             {link ? (
-                <Link href={link} style={styles.optionLink}>
+                <Link href={"/"} style={styles.optionLink}>
                     <FontAwesome name={icon} size={48} color="#FFD700" />
                     <Text style={styles.optionTitle}>{title}</Text>
                 </Link>
