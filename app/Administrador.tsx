@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     optionCard: {
-        backgroundColor: '#141109',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
         borderRadius: 10,
         width: '90%', // Cards ocupando 90% da tela
         height: 150, // Altura fixa
