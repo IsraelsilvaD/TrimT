@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, StyleSheet, Modal, ImageBackground } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, StyleSheet, Modal, ImageBackground, Dimensions, SafeAreaView } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
+
+const { width } = Dimensions.get('window'); // Detecta a largura da tela
 
 // Tipo para usuários
 interface User {
@@ -13,16 +16,16 @@ interface User {
 // Componente de gerenciamento de usuários
 const UserManagement = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [userRole, setUserRole] = useState<'Cliente' | 'Colaborador'>('Cliente'); // Estado para o papel do usuário
+  const [userRole, setUserRole] = useState<'Cliente' | 'Colaborador'>('Cliente');
   const [users, setUsers] = useState<User[]>([
     { id: 1, name: 'Usuário 1', phone: '1234-5678', email: 'usuario1@example.com', role: 'Cliente' },
     { id: 2, name: 'Usuário 2', phone: '9876-5432', email: 'usuario2@example.com', role: 'Colaborador' },
-  ]); // Lista de usuários
-  const [selectedUserId, setSelectedUserId] = useState<number | null>(null); // ID do usuário selecionado para edição
-  const [activeEditUserId, setActiveEditUserId] = useState<number | null>(null); // ID do usuário que está sendo editado
+  ]);
+  const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+  const [activeEditUserId, setActiveEditUserId] = useState<number | null>(null);
 
   const openModal = (user: User) => {
-    setUserRole(user.role); // Define o papel do usuário ao abrir o modal
+    setUserRole(user.role);
     setSelectedUserId(user.id);
     setModalVisible(true);
   };
@@ -30,15 +33,13 @@ const UserManagement = () => {
   const handleUpdateUser = () => {
     setUsers((prevUsers) =>
       prevUsers.map((user) =>
-        user.id === selectedUserId
-          ? { ...user, role: userRole } // Atualiza apenas o papel do usuário
-          : user
+        user.id === selectedUserId ? { ...user, role: userRole } : user
       )
     );
     setModalVisible(false);
-    setUserRole('Cliente'); // Reseta o papel do usuário
-    setSelectedUserId(null); // Reseta o usuário selecionado
-    setActiveEditUserId(null); // Reseta o usuário ativo
+    setUserRole('Cliente');
+    setSelectedUserId(null);
+    setActiveEditUserId(null);
   };
 
   const handleEditButtonPress = (userId: number) => {
@@ -47,12 +48,15 @@ const UserManagement = () => {
 
   return (
     <ImageBackground
-      source={require('../assets/images/imgFundo.jpeg')} // Defina o caminho correto da imagem
+      source={require('../assets/images/imgFundo.jpeg')}
       style={styles.background}
     >
-      <View style={styles.userManagement}>
-        <Text style={styles.headerText}>Gerenciamento de Usuários</Text>
-        <ScrollView style={styles.userListFixed}>
+      <SafeAreaView style={styles.safeArea}>
+        <View style={styles.fixedHeader}>
+          <Text style={styles.title}>Gerenciamento de Usuários</Text>
+        </View>
+
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
           <View style={styles.userList}>
             {users.map((user) => (
               <View key={user.id} style={styles.userListItem}>
@@ -64,10 +68,7 @@ const UserManagement = () => {
                 </View>
                 <View style={styles.buttonGroup}>
                   <TouchableOpacity
-                    style={[
-                      styles.editUserButton,
-                      activeEditUserId === user.id ? styles.editButtonActive : null,
-                    ]}
+                    style={[styles.editUserButton, activeEditUserId === user.id ? styles.editButtonActive : null]}
                     onPress={() => {
                       openModal(user);
                       handleEditButtonPress(user.id);
@@ -108,7 +109,7 @@ const UserManagement = () => {
                     onPress={() => setUserRole(role as 'Cliente' | 'Colaborador')}
                   >
                     <View style={[styles.radioCircle, userRole === role ? styles.selectedCircle : null]} />
-                    <Text style={styles.roleButtonText}>{role}</Text> {/* Corrigindo o erro de nome de propriedade */}
+                    <Text style={styles.roleButtonText}>{role}</Text>
                   </TouchableOpacity>
                 ))}
               </View>
@@ -124,87 +125,94 @@ const UserManagement = () => {
             </View>
           </View>
         </Modal>
-      </View>
+      </SafeAreaView>
     </ImageBackground>
   );
 };
 
 // Estilos
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+  },
   background: {
-    flex: 1,
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
     justifyContent: 'center',
+  },
+  fixedHeader: {
+    paddingTop: 50,
+    paddingBottom: 20,
     alignItems: 'center',
+    zIndex: 2,
   },
-  userManagement: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+  title: {
+    fontSize: width < 360 ? 22 : 28,
+    color: 'rgba(255, 255, 255, 0.9)',
     textAlign: 'center',
+    fontWeight: 'bold',
+    letterSpacing: 2,
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 3,
   },
-  headerText: {
-    fontSize: 24,
-    textAlign: 'center',
-    color: 'white', // Mudança para destacar o texto no fundo
-  },
-  userListFixed: {
-    marginTop: 20,
-    maxWidth: 800,
-    maxHeight: '80%', // Altura fixa para a lista
-    borderRadius: 5,
-    backgroundColor: 'rgba(80, 80, 80, 0.8)', // Cor sólida escura
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.5,
-    padding: 15,
+  scrollContainer: {
+    flexGrow: 1,
+    justifyContent: 'flex-start',
+    paddingHorizontal: 10,
+    paddingTop: 20,
   },
   userList: {
-    maxWidth: 300,
     margin: 0,
-    maxHeight: 300,
+    alignItems: 'center', // Centraliza os cards
   },
   userListItem: {
-    marginBottom: 20, // Aumenta o espaçamento entre os itens da lista
-    flexDirection: 'column', // Muda a direção para coluna
+    width: '70%', // Ajuste a largura do card aqui
+    marginBottom: 20,
+    flexDirection: 'column',
     justifyContent: 'space-between',
-    alignItems: 'flex-start', // Alinha à esquerda
+    alignItems: 'flex-start',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    borderRadius: 10,
+    padding: 15,
   },
   userInfoBlock: {
-    marginBottom: 10, // Aumenta o espaçamento entre o bloco de informações e os botões
+    marginBottom: 10,
   },
   userName: {
-    fontSize: 18, // Aumenta o tamanho da fonte do nome do usuário
-    fontWeight: 'bold', // Aumenta a espessura da fonte
-    color: 'white', // Cor do texto
-    marginBottom: 5, // Aumenta o espaçamento entre o nome e os detalhes
+    fontSize: width < 360 ? 16 : 18,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: 5,
   },
   userDetail: {
-    fontSize: 16, // Tamanho da fonte para detalhes
-    color: 'white', // Cor do texto
-    marginBottom: 5, // Espaçamento entre os detalhes
+    fontSize: width < 360 ? 14 : 16,
+    color: '#fff',
+    marginBottom: 5,
   },
   buttonGroup: {
     flexDirection: 'row',
-    gap: 5,
+    alignItems: 'center',
   },
   editUserButton: {
-    backgroundColor: 'white', // Cor do botão "Editar"
-    paddingVertical: 10, // Diminuindo um pouco a altura
-    paddingHorizontal: 20, // Mantendo o botão grande
+    backgroundColor: 'white',
+    paddingVertical: 10,
+    paddingHorizontal: 15,
     borderRadius: 5,
+    marginRight: 5,
   },
   editUserButtonText: {
-    color: 'black', // Texto preto
-    fontSize: 16, // Aumenta o tamanho do texto
+    color: 'black',
+    fontSize: 16,
   },
   editButtonActive: {
-    backgroundColor: '#FFD700', // Cor do botão "Editar" quando ativo
+    backgroundColor: '#FFD700',
   },
   deleteUserButton: {
     backgroundColor: 'red',
-    paddingVertical: 10, // Diminuindo um pouco a altura
-    paddingHorizontal: 20, // Mantendo o botão grande
+    paddingVertical: 10,
+    paddingHorizontal: 15,
     borderRadius: 5,
   },
   deleteUserButtonText: {
@@ -213,74 +221,73 @@ const styles = StyleSheet.create({
   },
   modalOverlay: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
-    width: '90%',
     backgroundColor: 'white',
     borderRadius: 10,
     padding: 20,
-    alignItems: 'center',
-    elevation: 5,
+    width: '80%',
+    maxHeight: '80%',
   },
   modalTitle: {
     fontSize: 20,
-    marginBottom: 15,
+    fontWeight: 'bold',
+    marginBottom: 20,
   },
   modalInfoBlock: {
-    width: '100%', // Largura total do bloco
-    marginBottom: 15, // Espaçamento inferior
+    marginBottom: 10,
   },
   modalText: {
-    fontSize: 16, // Tamanho do texto no modal
-    marginBottom: 5, // Espaçamento entre os textos
+    fontSize: 16,
   },
   roleLabel: {
-    marginBottom: 5, // Espaçamento inferior
-    fontSize: 16, // Aumenta o tamanho do texto
+    fontSize: 18,
+    marginTop: 10,
+    marginBottom: 10,
   },
   roleOptions: {
-    flexDirection: 'column', // Disposição vertical para os círculos de papel
-    justifyContent: 'flex-start', // Alinhamento no início
-    width: '100%', // Largura total do bloco
-    marginBottom: 10, // Espaçamento inferior
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: 20,
   },
   roleOption: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10, // Espaçamento entre opções
   },
   radioCircle: {
-    width: 20,
     height: 20,
-    borderRadius: 10, // Para torná-lo um círculo
-    borderColor: '#000',
+    width: 20,
+    borderRadius: 10,
     borderWidth: 2,
+    borderColor: '#000',
+    alignItems: 'center',
+    justifyContent: 'center',
     marginRight: 10,
   },
   selectedCircle: {
-    backgroundColor: '#FFD700', // Cor do círculo selecionado
+    backgroundColor: 'black',
+  },
+  roleButtonText: {
+    fontSize: 16,
   },
   modalButton: {
-    backgroundColor: 'green',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    backgroundColor: 'blue',
+    padding: 15,
     borderRadius: 5,
-    width: '100%',
-    marginBottom: 10,
+    alignItems: 'center',
   },
   modalButtonText: {
     color: 'white',
-    textAlign: 'center',
+    fontSize: 18,
   },
   cancelButton: {
-    backgroundColor: 'red',
+    backgroundColor: 'gray',
+    marginTop: 10,
   },
   cancelButtonText: {
     color: 'white',
-    textAlign: 'center',
+    fontSize: 18,
   },
 });
 
