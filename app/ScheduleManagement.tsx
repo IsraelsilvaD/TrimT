@@ -7,7 +7,7 @@ const ScheduleManagement = () => {
     { id: 2, name: 'Maria Oliveira', service: 'Barba', date: '2024-10-16', time: '15:30' },
   ]);
 
-  const handleCancelSchedule = (id) => {
+  const handleCancelSchedule = (id: number) => {
     Alert.alert(
       "Confirmação",
       "Tem certeza que deseja cancelar este agendamento?",
@@ -35,7 +35,7 @@ const ScheduleManagement = () => {
               <View style={styles.scheduleBlock} key={schedule.id}>
                 <View style={styles.scheduleInfo}>
                   <Text style={styles.scheduleName}>{schedule.name}</Text>
-                  <Text>
+                  <Text style={styles.scheduleDetail}>
                     {schedule.service} em {schedule.date} às {schedule.time}
                   </Text>
                 </View>
@@ -59,13 +59,15 @@ export default ScheduleManagement;
 
 const styles = StyleSheet.create({
   background: {
-    flex: 1,
-    resizeMode: 'cover', // Ajusta a imagem para cobrir toda a tela
-  },
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+    justifyContent: 'center',
+},
   container: {
     flexGrow: 1,
     padding: 20,
-    justifyContent: 'center',
+    justifyContent: 'flex-start', // Alinhamento para o início da tela
     alignItems: 'center',
   },
   title: {
@@ -74,12 +76,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
     color: '#fff', // Texto branco para contraste com a imagem
+    marginTop: 10, // Ajuste do espaço acima do título
   },
   scheduleList: {
     width: '100%',
   },
   scheduleBlock: {
-    backgroundColor: 'rgba(255, 255, 255, 0.9)', // Fundo branco com opacidade
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fundo com opacidade
     padding: 15,
     borderRadius: 8,
     marginBottom: 15,
@@ -95,6 +98,10 @@ const styles = StyleSheet.create({
   scheduleName: {
     fontSize: 18,
     fontWeight: 'bold',
+    color: '#fff', // Texto branco
+  },
+  scheduleDetail: {
+    color: '#fff', // Texto branco para os detalhes do agendamento
   },
   noSchedules: {
     textAlign: 'center',
