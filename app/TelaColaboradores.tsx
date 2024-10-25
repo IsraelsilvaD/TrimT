@@ -1,25 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'; 
 import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, ImageBackground } from 'react-native';
 
-const TelaColaboradores = () => {
-  const [selectedBarber, setSelectedBarber] = useState(null);
+// Definindo o tipo para os barbeiros
+type Barber = 'Junior' | 'Pedro' | 'Joao';
 
-  const barbers = ['Junior', 'Pedro', 'Joao'];
-  const appointments = [
+// Definindo o tipo para os agendamentos
+interface Appointment {
+  title: string;
+  barber: Barber;
+  time: string;
+  date: string;
+  status: 'Confirmado' | 'Cancelado';
+}
+
+const TelaColaboradores = () => {
+  const [selectedBarber, setSelectedBarber] = useState<Barber | null>(null);
+
+  const barbers: Barber[] = ['Junior', 'Pedro', 'Joao'];
+  const appointments: Appointment[] = [
     { title: 'Corte de Cabelo', barber: 'Junior', time: '09:15', date: 'Agosto 28', status: 'Confirmado' },
     { title: 'Pezinho', barber: 'Pedro', time: '10:15', date: 'Agosto 28', status: 'Confirmado' },
     { title: 'Barba', barber: 'Joao', time: '11:15', date: 'Agosto 28', status: 'Confirmado' },
     { title: 'Corte de Cabelo', barber: 'Junior', time: '12:15', date: 'Agosto 28', status: 'Cancelado' },
   ];
 
-  const handleBarberClick = (barber) => setSelectedBarber(barber);
+  const handleBarberClick = (barber: Barber) => setSelectedBarber(barber);
 
   const filteredAppointments = selectedBarber
     ? appointments.filter((appointment) => appointment.barber === selectedBarber)
     : appointments;
 
-  const getImagePath = (barber) => {
-    const images = {
+  const getImagePath = (barber: Barber) => {
+    const images: { [key in Barber]: any } = {
       Junior: require('../assets/images/profissional 1.jpg'),
       Pedro: require('../assets/images/profissional 1.jpg'),
       Joao: require('../assets/images/profissional 1.jpg'),
@@ -33,12 +45,14 @@ const TelaColaboradores = () => {
       style={styles.backgroundImage}
     >
       <View style={styles.mainContent}>
-        <ScrollView>
-          <View style={styles.greeting}>
-            <Text style={styles.greetingTitle}>Olá, Colaborador!</Text>
-            <Text style={styles.greetingDate}>Segunda, 26 de Agosto</Text>
-          </View>
+        {/* Elementos fixos no topo */}
+        <View style={styles.greeting}>
+          <Text style={styles.greetingTitle}>Olá, Colaborador!</Text>
+          <Text style={styles.greetingDate}>Segunda, 26 de Agosto</Text>
+        </View>
 
+        {/* ScrollView apenas para os cards */}
+        <ScrollView>
           <View style={styles.barbersContainer}>
             {barbers.map((barber, index) => (
               <TouchableOpacity 
@@ -97,8 +111,10 @@ const TelaColaboradores = () => {
 
 const styles = StyleSheet.create({
   backgroundImage: {
-    flex: 1,
+    width: '100%',
+    height: '100%',
     resizeMode: 'cover',
+    justifyContent: 'center',
   },
   mainContent: {
     flex: 1,
