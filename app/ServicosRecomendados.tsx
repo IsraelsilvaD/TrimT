@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   card: {
-    backgroundColor: '#141109',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     borderRadius: 10,
     padding: 0, // Remover o padding do card
     alignItems: 'center',
