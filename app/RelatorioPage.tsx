@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, Button, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
+import React, { useState } from 'react'; 
+import { View, Text, Button, StyleSheet, TouchableOpacity, ImageBackground, ScrollView } from 'react-native';
 
 const RelatorioPage = () => {
   const [tipoRelatorio, setTipoRelatorio] = useState('comissoes');
@@ -18,7 +18,7 @@ const RelatorioPage = () => {
       source={require('../assets/images/imgFundo.jpeg')} // Caminho para a imagem de fundo
       style={styles.background}
     >
-      <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.container}>
         <Text style={styles.title}>Gerenciar Relatórios</Text>
 
         {/* Opções de relatório */}
@@ -53,7 +53,7 @@ const RelatorioPage = () => {
             <Text style={styles.resultContent}>{relatorio}</Text>
           </View>
         ) : null}
-      </View>
+      </ScrollView>
     </ImageBackground>
   );
 };
@@ -66,16 +66,17 @@ const styles = StyleSheet.create({
     resizeMode: 'cover', // Ajusta a imagem para cobrir a tela inteira
   },
   container: {
-    flex: 1,
+    flexGrow: 1,
     padding: 20,
-    justifyContent: 'center',
+    justifyContent: 'flex-start', // Alinha os itens ao topo
     alignItems: 'center',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
-    color: '#fff', // Texto branco para melhor contraste
+    color: '#fff', // Texto branco para melhor contraste   
+    paddingTop: 50, // Adiciona um espaço acima do título
   },
   options: {
     flexDirection: 'row',
@@ -100,16 +101,18 @@ const styles = StyleSheet.create({
     marginTop: 20,
     padding: 15,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#000',
     borderRadius: 5,
-    backgroundColor: 'rgba(255, 255, 255, 0.9)', // Fundo branco com transparência
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fundo escuro para o card de resultado
   },
   resultTitle: {
     fontSize: 20,
     fontWeight: 'bold',
+    color: '#fff', // Texto branco para contraste
   },
   resultContent: {
     fontSize: 16,
     marginTop: 10,
+    color: '#fff', // Texto branco para o conteúdo do resultado
   },
 });
